@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import HistoryButton from "../utils/button";
 import TextField from "@mui/material/TextField";
 import { Trash } from "lucide-react";
-import HistoryRightSideItem from "../utils/history-right-side-item";
 import { Pause } from "lucide-react";
 import { Settings } from "lucide-react";
 import { Search } from "lucide-react";

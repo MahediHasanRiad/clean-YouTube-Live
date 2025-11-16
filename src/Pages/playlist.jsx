@@ -1,23 +1,33 @@
 import Grid from "@mui/material/Grid";
 import CardView from "../components/UI/card";
-import { useEffect } from "react";
-import getPlaylist from "../components/API";
+import { useDispatch, useSelector } from "react-redux";
+import { Typography } from "@mui/material";
+import { removePlaylist } from "../components/features/playlist/playlistSlice";
+import { addFavourite } from "../components/features/favourite/favouriteSlice";
 
 function Playlist() {
-  useEffect( () => {
-    (async () => {
-       await getPlaylist("PL_XxuZqN0xVDr08QgQHljCecWtA4jBLnS")
-    })()
-  }, []);
+  const allPlaylist = useSelector((state) => state.Playlist.playlists);
+  const dispatch = useDispatch()
 
   return (
-    <Grid container spacing={2}>
-      <CardView />
-      <CardView />
-      <CardView />
-      <CardView />
-      <CardView />
-    </Grid>
+    <>
+      <Typography variant="h6" sx={{ marginBottom: "10px" }}>
+        Playlist:
+      </Typography>
+      <Grid container spacing={2}>
+        {allPlaylist.map((item, index) => (
+          <CardView
+            key={index}
+            playlistId={item.playlistId}
+            img={item.playlistThumbnail.url}
+            channelName={item.channelName}
+            playlistName={item.playlistTitle}
+            addItem = {() => dispatch(addFavourite(item.playlistId))}
+            removeItem={() => dispatch(removePlaylist(item.playlistId))}
+          />
+        ))}
+      </Grid>
+    </>
   );
 }
 

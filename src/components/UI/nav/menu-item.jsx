@@ -30,7 +30,7 @@ function MenuItem({ icon: Icon, text, link = "#", disabled = true }) {
           variant="body2" 
           sx={{ 
             fontSize: '14px',
-            fontWeight: 400
+            fontWeight: 400,
           }}
         >
           {text}

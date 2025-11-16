@@ -1,12 +1,64 @@
-import { Menu, Search } from "lucide-react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Check, Menu, Search, Info, CircleX, Mic, Plus, Bell, UserRoundPen } from "lucide-react";
 import { FaYoutube } from "react-icons/fa6";
 import { Box, TextField, Typography, IconButton } from "@mui/material";
-import { Mic } from "lucide-react";
-import { Plus } from "lucide-react";
-import { Bell } from "lucide-react";
-import { UserRoundPen } from "lucide-react";
+import { fetchPlaylist } from "../../features/playlist/playlistSlice";
+import Alert from "@mui/material/Alert";
+import {Snackbar} from "@mui/material";
+
 
 function Header({ toggleMenu }) {
+  const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+
+  // for Popup
+  const [open, setOpen] = useState(false);
+  const [alertType, setAlertType] = useState("success");
+  const [alertMsg, setAlertMsg] = useState("");
+  const [Icon, setIcon] = useState(Check);
+
+  // get playlist from Store
+  const playlists = useSelector((state) => state.Playlist.playlists);
+
+
+  // handler Input
+  const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  // submit playlist
+  const savePlaylistid = (e) => {
+    e.preventDefault();
+
+    if (!Array.isArray(playlists)) {
+      console.error("playlists is not an array:", playlists);
+      return;
+    }
+    const exists = playlists.find((p) => p.playlistId === value);
+
+    if (!exists && value.trim() !== "") {
+      dispatch(fetchPlaylist(value));
+      setValue("");
+
+      setIcon(Check)
+      setAlertType("success");
+      setAlertMsg(
+        "Playlist Added successfully."
+      );
+      setOpen(true);
+    } else if (exists) {
+      setIcon(Info)
+      setAlertType("info");
+      setAlertMsg("Playlist Already Exists !!!");
+      setOpen(true);
+    } else {
+      setIcon(CircleX)
+      setAlertType("error");
+      setAlertMsg("Please enter a playlist ID");
+      setOpen(true);
+    }
+  };
 
   return (
     <section
@@ -20,10 +72,21 @@ function Header({ toggleMenu }) {
     >
       {/* left section */}
       <section style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <Menu size={30} onClick={() => toggleMenu()} style={{ cursor: "pointer" }}/>
+        <Menu
+          size={30}
+          onClick={() => toggleMenu()}
+          style={{ cursor: "pointer" }}
+        />
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <FaYoutube color="red" size={40} />
-          <Typography variant="h6" sx={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: '-0.06em' }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: 600,
+              letterSpacing: "-0.06em",
+            }}
+          >
             YouTube
           </Typography>
         </div>
@@ -36,6 +99,8 @@ function Header({ toggleMenu }) {
             fullWidth
             placeholder="Input Playlist..."
             size="small"
+            onChange={handleInput}
+            value={value}
             sx={{
               "& .MuiOutlinedInput-root": {
                 borderRadius: "30px 0px 0px 30px",
@@ -43,6 +108,7 @@ function Header({ toggleMenu }) {
             }}
           />
           <IconButton
+            onClick={savePlaylistid}
             sx={{
               backgroundColor: "#f0f0f0",
               borderRadius: "0px 30px 30px 0px",
@@ -93,6 +159,19 @@ function Header({ toggleMenu }) {
           <UserRoundPen size={30} style={{ cursor: "pointer" }} />
         </div>
       </section>
+
+      {/* popup notification start */}
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "button", horizontal: "center" }}
+      >
+        <Alert icon={<Icon fontSize="inherit" />} severity={alertType}>
+          {alertMsg}
+        </Alert>
+      </Snackbar>
+      {/* popup notification end */}
     </section>
   );
 }

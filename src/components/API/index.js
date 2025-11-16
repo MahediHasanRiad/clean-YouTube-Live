@@ -13,17 +13,6 @@ const getPlaylistItem = async ( playlistId, pageToken = '', result = [] ) => {
         result = await getPlaylistItem(playlistId, data.nextPageToken, result)
     }
 
-    result = result.map(item => {
-        const { title, description, resourceId: { videoId }, thumbnails: { medium } } = item.snippet
-
-        return {
-            playlistId,
-            title,
-            description,
-            videoId,
-            thumbnail: medium
-        }
-    })
     return result
 
   } catch (error) {
@@ -42,14 +31,28 @@ const getPlaylist = async (playlistId) => {
 
     try {
         const { data } = await axios.get(URL)
-        const playlistItems = await getPlaylistItem(playlistId)
-    
-        const { title, description, thumbnails: { medium } } = data.items[0].snippet
-    
+        let playlistItems = await getPlaylistItem(playlistId)
+
+        playlistItems = playlistItems.map(item => {
+        const { title, description, resourceId: { videoId }, thumbnails: { medium } } = item.snippet
+
         return {
+            playlistId,
+            title,
+            description,
+            videoId,
+            thumbnail: medium
+        }
+    })
+
+    const { title, description, thumbnails: { medium }, channelTitle } = data.items[0].snippet
+
+        return {
+            playlistId,
             playlistTitle: title,
             playlistDescription: description,
             playlistThumbnail: medium,
+            channelName: channelTitle,
             playlistItems
         }
     } catch (error) {
