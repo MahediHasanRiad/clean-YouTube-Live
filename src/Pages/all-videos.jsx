@@ -22,7 +22,6 @@ function AllVideos() {
   // get index for showing video count
   const getIndex = (index) => {
     setVideoIndex(index);
-    console.log(videoIndex);
   };
 
   return (

@@ -6,6 +6,7 @@ import { Box, TextField, Typography, IconButton } from "@mui/material";
 import { fetchPlaylist } from "../../features/playlist/playlistSlice";
 import Alert from "@mui/material/Alert";
 import { Snackbar } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Header({ toggleMenu }) {
   const [value, setValue] = useState("");
@@ -96,7 +97,7 @@ function Header({ toggleMenu }) {
               color: "#030303",
             }}
           >
-            YouTube
+            <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>YouTube</Link>
           </Typography>
         </Box>
       </Box>

@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
@@ -13,17 +12,16 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { Snackbar } from "@mui/material";
 import { Alert } from "@mui/material";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 export default function CardView({
   playlistId,
   img,
   playlistName,
   channelName,
-  addItem = '',
-  removeItem = ''
+  addItem = "",
+  removeItem = "",
 }) {
-  
   const [open, setOpen] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [alertMsg, setAlertMsg] = useState("");
@@ -31,10 +29,12 @@ export default function CardView({
   const [isHovered, setIsHovered] = useState(false);
 
   const favourite = useSelector((state) => state.Favourite.favourites);
-  const isFavourite = favourite.includes(playlistId)
+  const isFavourite = favourite.includes(playlistId);
 
   const deletePlaylist = () => {
-    removeItem();
+    if(window.confirm('Are you Sure ???')){
+      removeItem();
+    }
     setOpen(true);
     setAlertType("warning");
     setAlertMsg("Successfully Deleted !");
@@ -51,9 +51,9 @@ export default function CardView({
 
   return (
     <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-      <Card 
-        sx={{ 
-          maxWidth: "100%", 
+      <Card
+        sx={{
+          maxWidth: "100%",
           height: "400px",
           background: "linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%)",
           border: "1px solid rgba(0, 0, 0, 0.08)",
@@ -64,43 +64,48 @@ export default function CardView({
           "&:hover": {
             boxShadow: "0 12px 40px rgba(0, 0, 0, 0.15)",
             transform: "translateY(-4px)",
-            borderColor: "rgba(25, 118, 210, 0.2)"
+            borderColor: "rgba(25, 118, 210, 0.2)",
           },
           display: "flex",
-          flexDirection: "column"
+          flexDirection: "column",
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <Box sx={{ position: "relative", overflow: "hidden" }}>
-          <CardMedia 
-            sx={{ 
-              height: 240,
-              transition: "transform 0.3s ease-out",
-              transform: isHovered ? "scale(1.05)" : "scale(1)",
-            }} 
-            image={img} 
-            title={playlistName} 
-          />
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: isHovered 
-                ? "linear-gradient(135deg, rgba(25, 118, 210, 0.1) 0%, rgba(25, 118, 210, 0) 100%)" 
-                : "none",
-              transition: "background 0.3s ease",
-            }}
-          />
+          <Link
+            to={`/playlist/${playlistId}`}
+            style={{ textDecoration: "none", flex: 1 }}
+          >
+            <CardMedia
+              sx={{
+                height: 240,
+                transition: "transform 0.3s ease-out",
+                transform: isHovered ? "scale(1.05)" : "scale(1)",
+              }}
+              image={img}
+              title={playlistName}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: isHovered
+                  ? "linear-gradient(135deg, rgba(25, 118, 210, 0.1) 0%, rgba(25, 118, 210, 0) 100%)"
+                  : "none",
+                transition: "background 0.3s ease",
+              }}
+            />
+          </Link>
         </Box>
 
         <CardContent sx={{ flex: 1, overflow: "hidden", pb: 1 }}>
-          <Typography 
-            gutterBottom 
-            variant="h6" 
+          <Typography
+            gutterBottom
+            variant="h6"
             component="div"
             sx={{
               fontWeight: 600,
@@ -111,86 +116,64 @@ export default function CardView({
               textOverflow: "ellipsis",
               display: "-webkit-box",
               WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical"
+              WebkitBoxOrient: "vertical",
             }}
           >
             {playlistName}
           </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ 
+          <Typography
+            variant="body2"
+            sx={{
               color: "#666",
               fontSize: "0.875rem",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              whiteSpace: "nowrap"
+              whiteSpace: "nowrap",
             }}
           >
             By {channelName}
           </Typography>
         </CardContent>
 
-        <CardActions 
-          sx={{ 
-            justifyContent: "space-between",
+        <CardActions
+          sx={{
             pt: 0.5,
             pb: 1.5,
             px: 2,
-            gap: 1
+            gap: 1,
+            justifyContent: "flex-end",
           }}
         >
-          <Link to={`/playlist/${playlistId}`} style={{ textDecoration: "none", flex: 1 }}>
-            <Button 
-              fullWidth
-              size="small"
-              sx={{
-                textTransform: "none",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                background: "linear-gradient(135deg, #1976d2 0%, #1565c0 100%)",
-                color: "#fff",
-                borderRadius: "8px",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  background: "linear-gradient(135deg, #1565c0 0%, #0d47a1 100%)",
-                  transform: "translateY(-1px)"
-                }
-              }}
-            >
-              View Playlist
-            </Button>
-          </Link>
-          
           <Box sx={{ display: "flex", gap: 0.5 }}>
-            <IconButton 
-              size="small" 
+            <IconButton
+              size="small"
               onClick={addFavouriteItem}
               sx={{
                 transition: "all 0.2s ease",
                 "&:hover": {
                   background: "rgba(202, 25, 25, 0.08)",
-                  transform: "scale(1.1)"
-                }
+                  transform: "scale(1.1)",
+                },
               }}
             >
               <Heart
                 fill={isFavourite ? "#ca1919" : "none"}
                 color={isFavourite ? "#ca1919" : "#1976d2"}
-                size={20}
+                size={25}
               />
             </IconButton>
-            <IconButton 
-              size="small" 
+            <IconButton
+              size="small"
               onClick={deletePlaylist}
               sx={{
                 transition: "all 0.2s ease",
                 "&:hover": {
                   background: "rgba(25, 118, 210, 0.08)",
-                  transform: "scale(1.1)"
-                }
+                  transform: "scale(1.1)",
+                },
               }}
             >
-              <Trash color="#1976d2" size={20} />
+              <Trash color="#1976d2" size={25} />
             </IconButton>
           </Box>
         </CardActions>

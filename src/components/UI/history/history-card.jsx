@@ -6,16 +6,22 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 
-export default function HistoryCard() {
+export default function HistoryCard({ img, title, playlistId, videoId, index }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
+    // <Link
+    //   to={`/playlist/${playlistId}/video/${videoId}?index=${index}`}
+    //   style={{ textDecoration: "none", color: "inherit" }}
+    // >
     <Grid>
       <Card 
         sx={{ 
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
+          height: { xs: "100px", sm: "auto" },
           cursor: "pointer",
           background: "linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%)",
           border: "1px solid rgba(0, 0, 0, 0.08)",
@@ -35,13 +41,13 @@ export default function HistoryCard() {
           component="img"
           sx={{ 
             width: { xs: "100%", sm: "50%" },
-            height: { xs: "200px", sm: "auto" },
+            height: { xs: "100%", sm: "auto" },
             objectFit: "cover",
             transition: "transform 0.3s ease-out",
             transform: isHovered ? "scale(1.05)" : "scale(1)"
           }}
-          image="/static/images/cards/live-from-space.jpg"
-          alt="Live from space album cover"
+          image={img}
+          alt={title}
         />
         <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
@@ -53,7 +59,7 @@ export default function HistoryCard() {
                 color: "#1a1a1a"
               }}
             >
-              Live From Space
+              {title}
             </Typography>
           </CardContent>
           <Box 
@@ -75,5 +81,6 @@ export default function HistoryCard() {
         </Box>
       </Card>
     </Grid>
+    // </Link>
   );
 }

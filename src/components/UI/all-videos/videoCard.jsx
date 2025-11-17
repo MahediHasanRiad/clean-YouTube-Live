@@ -2,10 +2,20 @@ import { Box, Card, CardMedia, CardContent, Typography } from "@mui/material";
 import { useState } from "react";
 import { Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addHistory } from "../../features/history/HistorySlice.js";
 
 
 function VideoCard({ index, img, title, playlistId, videoId, getIndex }) {
+
   const [isHovered, setIsHovered] = useState(false);
+
+  const dispatch = useDispatch()
+
+  const passValues = () => {
+    getIndex(index) // All Video page
+    dispatch(addHistory({playlistId, videoId, index})) // history reducer
+  }
   
 
   return (
@@ -31,7 +41,7 @@ function VideoCard({ index, img, title, playlistId, videoId, getIndex }) {
               transform: "translateY(-2px)",
             },
           }}
-          onClick={() => getIndex(index)}
+          onClick={passValues}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >

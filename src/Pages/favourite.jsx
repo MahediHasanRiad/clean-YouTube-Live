@@ -1,8 +1,8 @@
 import Grid from "@mui/material/Grid";
 import CardView from "../components/UI/card";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography } from "@mui/material";
-import { addFavourite, removeFavourite } from "../components/features/favourite/favouriteSlice";
+import { Typography, Box } from "@mui/material";
+import { removeFavourite } from "../components/features/favourite/favouriteSlice";
 
 function Favourite() {
   const allPlaylist = useSelector((state) => state.Playlist.playlists);
@@ -20,11 +20,12 @@ function Favourite() {
 
 
   return (
-    <>
+    <Box sx={{ marginLeft: "7%", marginTop: '2%' }}>
       <Typography variant="h6" sx={{ marginBottom: "10px" }}>
         Favourite:
       </Typography>
       <Grid container spacing={2}>
+        {favouritePlaylist.length === 0 && <Box>No Favourite Item Added</Box>}
         {favouritePlaylist.map((item, index) => (
         <CardView
           key={index}
@@ -36,7 +37,7 @@ function Favourite() {
         />
       ))}
       </Grid>
-    </>
+    </Box>
   );
 }
 

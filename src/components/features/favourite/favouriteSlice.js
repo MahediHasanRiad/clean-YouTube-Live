@@ -11,7 +11,7 @@ const FavouriteSlice = createSlice({
         addFavourite: (state, action) => {
             const exist = state.favourites.includes(action.payload)
 
-            if(exist) return
+            if(exist) state.favourites.pop(action.payload)
             if(!exist) state.favourites.push(action.payload)
         },
         removeFavourite: (state, action) => {
