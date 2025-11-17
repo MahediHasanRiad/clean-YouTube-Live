@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Typography, Box } from "@mui/material";
 import { removePlaylist } from "../components/features/playlist/playlistSlice";
 import { addFavourite } from "../components/features/favourite/favouriteSlice";
+import { useSearchParams } from "react-router-dom";
 
 function Playlist() {
   const allPlaylist = useSelector((state) => state.Playlist.playlists);

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import getPlaylist from "../../API";
+import Storage from "../../LocalStore";
 
 export const fetchPlaylist = createAsyncThunk(
   "playlist/fetchPlaylist",
@@ -39,7 +40,10 @@ const PlaylistSlice = createSlice({
         const id = action.payload.playlistId;
         const exist = state.playlists.some(item => item.playlistId === id);
 
-        if (!exist) state.playlists.push(action.payload);
+        if (!exist) {
+          state.playlists.push(action.payload)
+          Storage.setItem('Playlists', action.payload)
+        };
         if (exist) console.log("Exist !");
       })
       .addCase(fetchPlaylist.rejected, (state, action) => {
