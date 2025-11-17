@@ -49,5 +49,5 @@ const PlaylistSlice = createSlice({
   },
 });
 
-export const { removePlaylist, isError, isLoading } = PlaylistSlice.actions;
+export const { removePlaylist, isError, isLoading, playlists } = PlaylistSlice.actions;
 export default PlaylistSlice.reducer;

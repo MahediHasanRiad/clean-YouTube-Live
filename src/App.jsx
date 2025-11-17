@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Favourite from "./Pages/favourite";
 import History from "./Pages/history";
 import Playlist from "./Pages/playlist";
+import AllVideos from "./Pages/all-videos";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/home" element={<Favourite/>} />
             <Route path="/history" element={<History/>} />
             <Route path="/playlist" element={<Playlist/>} />
+            <Route path="/playlist/:id" element={<AllVideos/>} />
           </Routes>
           </section>
 
