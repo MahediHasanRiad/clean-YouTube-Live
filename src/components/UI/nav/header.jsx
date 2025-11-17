@@ -33,31 +33,39 @@ function Header({ toggleMenu }) {
   const savePlaylistid = (e) => {
     e.preventDefault();
 
+    // get (playlistId) from Playlist
+    const url = new URL(value);
+    const params = new URLSearchParams(url.search);
+    const getPlaylistId = params.get("list");
+
     if (!Array.isArray(playlists)) {
       console.error("playlists is not an array:", playlists);
       return;
     }
-    const exists = playlists.find((p) => p.playlistId === value);
+    if (value === "") {
+      setIcon(CircleX);
+      setAlertType("error");
+      setAlertMsg("Please enter a playlist ID");
+      setOpen(true);
+    }
+    // playlist exist or not ???
+    const exists = playlists.find((p) => p.playlistId === getPlaylistId);
 
     if (!exists && value.trim() !== "") {
-      dispatch(fetchPlaylist(value));
+      dispatch(fetchPlaylist(getPlaylistId));
       setValue("");
 
       setIcon(Check);
       setAlertType("success");
       setAlertMsg("Playlist Added successfully.");
       setOpen(true);
-    } else if (exists) {
+    }
+     if (exists) {
       setIcon(Info);
       setAlertType("info");
       setAlertMsg("Playlist Already Exists !!!");
       setOpen(true);
-    } else {
-      setIcon(CircleX);
-      setAlertType("error");
-      setAlertMsg("Please enter a playlist ID");
-      setOpen(true);
-    }
+    } 
   };
 
   return (

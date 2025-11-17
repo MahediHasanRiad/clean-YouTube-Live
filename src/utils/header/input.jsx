@@ -13,7 +13,7 @@ function InputPlaylist({ handleInput, value, savePlaylistid }) {
     >
       <TextField
         fullWidth
-        placeholder="Input Playlist ID..."
+        placeholder="Input Playlist..."
         size="small"
         onChange={handleInput}
         value={value}
