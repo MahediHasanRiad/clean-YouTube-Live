@@ -37,28 +37,40 @@ function History() {
   };
 
   return (
-    <Box sx={{ marginLeft: "7%" }}>
-      <Box sx={{ height: "150px" }}>
+    <Box sx={{ padding: { xs: 2, sm: 3, md: 4 } }}>
+      <Box sx={{ height: "auto", marginBottom: 3 }}> 
         <Typography
           variant="h3"
           sx={{
             fontWeight: 600,
             letterSpacing: "-0.04em",
-            fontSize: "2.5rem",
+            fontSize: { xs: "2rem", sm: "2.5rem" }, 
             marginBottom: "10px",
           }}
         >
           Watch History
         </Typography>
-        <HistoryButton text={"All"} />
-        <HistoryButton text={"Videos"} />
-        <HistoryButton text={"Sorts"} />
-        <HistoryButton text={"Podcast"} />
-        <HistoryButton text={"Music"} />
+        {/* Wrapper for buttons to ensure they wrap nicely on mobile */}
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, marginTop: 2 }}>
+          <HistoryButton text={"All"} />
+          <HistoryButton text={"Videos"} />
+          <HistoryButton text={"Sorts"} />
+          <HistoryButton text={"Podcast"} />
+          <HistoryButton text={"Music"} />
+        </Box>
       </Box>
-      <Box sx={{ display: "flex" }}>
-        <Grid direction={"column"} container spacing={2} sx={{ width: "60%" }}>
-          {getVideo.length === 0 && <Box>No watch History</Box>}
+      <Box sx={{ display: "flex", flexDirection: { xs: 'column', md: 'row' } }}> {/* Stacks on mobile */}
+        <Grid 
+          direction={"column"} 
+          container 
+          spacing={2} 
+          sx={{ width: { xs: '100%', md: '60%' } }} // Responsive width
+        >
+          {getVideo.length === 0 && (
+            <Typography sx={{ padding: 3, color: 'text.secondary', width: '100%' }}>
+              No watch History
+            </Typography>
+          )}
           {getVideo.length > 0 &&
             getVideo.map((item, index) => (
               // show history
@@ -72,24 +84,25 @@ function History() {
               />
             ))}
         </Grid>
-        {/* left section  */}
+        {/* right section (was 'left section' in comment) */}
         <Box
           component="form"
           sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-            marginLeft: "10%",
+            // Responsive layout. Stacks under with margin-top on mobile.
+            marginLeft: { xs: 0, md: "10%" },
+            marginTop: { xs: 4, md: 0 },
+            width: { xs: '100%', md: 'auto' } // Responsive width
           }}
           noValidate
           autoComplete="off"
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center", width: '100%' }}>
             <Search />
             <TextField
               id="standard-textarea"
-              label="Multiline Placeholder"
-              placeholder="Placeholder"
-              multiline
+              placeholder="Search history" // Changed placeholder
               variant="standard"
+              sx={{ flex: 1, marginLeft: 1 }} // Simpler styling
             />
           </Box>
           <br />

@@ -34,11 +34,11 @@ export default function CardView({
   const deletePlaylist = () => {
     if(window.confirm('Are you Sure ???')){
       removeItem();
+      setOpen(true);
+      setAlertType("warning");
+      setAlertMsg("Successfully Deleted !");
+      setIcon(CircleX);
     }
-    setOpen(true);
-    setAlertType("warning");
-    setAlertMsg("Successfully Deleted !");
-    setIcon(CircleX);
   };
 
   const addFavouriteItem = () => {

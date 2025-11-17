@@ -1,10 +1,10 @@
 import { Box, Typography, Skeleton } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import VideoCard from "../components/UI/all-videos/videoCard";
 import { AlertCircle, ChevronDown } from "lucide-react";
 import ReactPlayer from "react-player";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 function AllVideos() {
@@ -62,7 +62,7 @@ function AllVideos() {
             flex: 1,
             overflowY: "auto",
             overflowX: "hidden",
-            paddingRight: "12px",
+            paddingRight: "12px", // This padding is for the scrollbar area
             "&::-webkit-scrollbar": {
               width: "8px",
             },
@@ -85,7 +85,8 @@ function AllVideos() {
                 alignItems: "center",
                 gap: 2,
                 padding: 3,
-                background: "linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)",
+                background:
+                  "linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)",
                 border: "1px solid #ef5350",
                 borderRadius: "12px",
                 marginTop: "20px",
@@ -164,17 +165,28 @@ function AllVideos() {
           )}
 
           {!isLoading && displayAllVideos.length > 0 && (
-            <Box sx={{ display: "flex", gap: 2, height: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                height: "100%",
+                flexDirection: { xs: "column", md: "row" }, // Stacks on mobile, row on desktop
+              }}
+            >
               {/* Left Section - Fixed Content */}
               <Box
                 sx={{
-                  flex: "0 0 75%",
+                  // Responsive flex, width, height, and aspect ratio
+                  flex: { xs: "1 1 auto", md: "0 0 75%" },
+                  width: { xs: "100%", md: "75%" },
+                  height: { xs: "auto", md: "100%" },
+                  aspectRatio: { xs: "16/9", md: "auto" }, // 16:9 player on mobile
                   p: 2,
                   background:
                     "linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%)",
                   borderRadius: "12px",
                   border: "1px solid rgba(0, 0, 0, 0.08)",
-                  overflowY: "hidden",
+                  overflow: "hidden", 
                 }}
               >
                 {/* Display Video  */}
@@ -191,14 +203,19 @@ function AllVideos() {
               {/* Right Section - Scrollable Videos */}
 
               <Accordion
+                // Make accordion expanded by default, (better for mobile)
+                defaultExpanded={true}
                 sx={{
-                  flex: "0 0 25%",
+                  // Responsive flex and width
+                  flex: { xs: "1 1 auto", md: "0 0 25%" },
+                  width: { xs: "100%", md: "25%" },
                   overflowY: "auto",
                   overflowX: "hidden",
                   display: "flex",
                   flexDirection: "column",
                   gap: 2,
-                  paddingRight: "8px",
+                  // Responsive padding
+                  paddingRight: { xs: 0, md: "8px" },
                   "&::-webkit-scrollbar": {
                     width: "12px",
                     borderRadius: "4px",

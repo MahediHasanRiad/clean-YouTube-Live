@@ -58,7 +58,8 @@ function Header({ toggleMenu }) {
     <Box
       sx={{
         margin: "0",
-        padding: "12px 24px",
+        // MODIFIED: Responsive padding
+        padding: { xs: "12px 16px", sm: "12px 24px" }, 
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -69,11 +70,19 @@ function Header({ toggleMenu }) {
         position: "sticky",
         top: 0,
         zIndex: 100,
-        flexWrap: { xs: "wrap", md: "nowrap" },
+        flexWrap: { xs: "wrap", md: "nowrap" }, // Allow wrapping on mobile
       }}
     >
       {/* Left Section */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "16px", minWidth: "fit-content" }}>
+      <Box 
+        sx={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "16px", 
+          minWidth: "fit-content",
+          order: { xs: 1, md: 1 } // Flex order
+        }}
+      >
         <IconButton
           onClick={() => toggleMenu()}
           sx={{
@@ -87,7 +96,9 @@ function Header({ toggleMenu }) {
         </IconButton>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>
           <FaYoutube color="#ff0000" size={32} />
+          </Link>
           <Typography
             variant="h6"
             sx={{
@@ -95,6 +106,8 @@ function Header({ toggleMenu }) {
               fontWeight: 700,
               letterSpacing: "-0.05em",
               color: "#030303",
+              // Hide text on mobile, show on small screens and up
+              display: { xs: 'none', sm: 'block' } 
             }}
           >
             <Link to={'/'} style={{ textDecoration: 'none', color: 'inherit' }}>YouTube</Link>
@@ -103,7 +116,17 @@ function Header({ toggleMenu }) {
       </Box>
 
       {/* Middle Section - Search */}
-      <Box sx={{ flex: 1, minWidth: "300px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Box 
+        sx={{ 
+          flex: { xs: '1 1 100%', md: 1 }, // Take full width on mobile
+          minWidth: { xs: 'auto', md: '300px' }, // Responsive min-width
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center",
+          order: { xs: 3, md: 2 }, // Move to 3rd position (new line) on mobile
+          marginTop: { xs: '12px', md: 0 } // Add margin-top when wrapped
+        }}
+      >
         <Box sx={{ width: "100%", maxWidth: "600px", display: "flex", alignItems: "center" }}>
           <TextField
             fullWidth
@@ -161,6 +184,8 @@ function Header({ toggleMenu }) {
               background: "linear-gradient(135deg, #e8e8e8 0%, #dcdcdc 100%)",
               transform: "scale(1.05)",
             },
+            // Hide Mic icon on mobile, show on small screens and up
+            display: { xs: 'none', sm: 'flex' }
           }}
         >
           <Mic size={20} />
@@ -168,7 +193,15 @@ function Header({ toggleMenu }) {
       </Box>
 
       {/* Right Section */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "12px", minWidth: "fit-content" }}>
+      <Box 
+        sx={{ 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "12px", 
+          minWidth: "fit-content",
+          order: { xs: 2, md: 3 } // Move to 2nd position on mobile
+        }}
+      >
         <Box
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -178,7 +211,8 @@ function Header({ toggleMenu }) {
             display: "flex",
             alignItems: "center",
             gap: "8px",
-            padding: "8px 16px",
+            // Responsive padding (icon-only on mobile)
+            padding: { xs: "8px", sm: "8px 16px" },
             cursor: "pointer",
             transition: "all 0.3s ease",
             "&:hover": {
@@ -194,6 +228,8 @@ function Header({ toggleMenu }) {
               fontSize: "0.95rem",
               fontWeight: 600,
               color: "#030303",
+              // Hide text on mobile, show on small screens and up
+              display: { xs: 'none', sm: 'block' }
             }}
           >
             Create

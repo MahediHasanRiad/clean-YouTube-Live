@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import CardView from "../components/UI/card";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography, Box } from "@mui/material";
-import { removeFavourite } from "../components/features/favourite/favouriteSlice";
+import { addFavourite, removeFavourite } from "../components/features/favourite/favouriteSlice";
 
 function Favourite() {
   const allPlaylist = useSelector((state) => state.Playlist.playlists);
@@ -33,6 +33,7 @@ function Favourite() {
           img={item.playlistThumbnail.url}
           channelName={item.channelName}
           playlistName={item.playlistTitle}
+          addItem = {() => dispatch(addFavourite(item.playlistId))}
           removeItem = {() => dispatch(removeFavourite(item.playlistId))}
         />
       ))}

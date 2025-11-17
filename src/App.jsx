@@ -16,7 +16,7 @@ function App() {
 
           <section style={{ col: '8' }}>
             <Routes>
-            <Route path="/home" element={<Favourite/>} />
+            <Route path="/" element={<Favourite/>} />
             <Route path="/history" element={<History/>} />
             <Route path="/playlist" element={<Playlist/>} />
             <Route path="/playlist/:id" element={<AllVideos/>} />
