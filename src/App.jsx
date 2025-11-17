@@ -20,6 +20,7 @@ function App() {
             <Route path="/history" element={<History/>} />
             <Route path="/playlist" element={<Playlist/>} />
             <Route path="/playlist/:id" element={<AllVideos/>} />
+            <Route path="/playlist/:id/video/:videoId" element={<AllVideos/>} />
           </Routes>
           </section>
 
