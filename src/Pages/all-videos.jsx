@@ -6,8 +6,9 @@ import { AlertCircle, ChevronDown } from "lucide-react";
 import ReactPlayer from "react-player";
 import { useState } from "react";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import IsError from "../utils/isError";
 import IsLoading from "../utils/isLoading";
+import IsLoadingData from "../utils/isLoadingData";
+import IsError from "../utils/isError";
 
 function AllVideos() {
   const playlist = useSelector((state) => state.Playlist.playlists);
@@ -79,30 +80,8 @@ function AllVideos() {
             },
           }}
         >
-          {isError && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                padding: 3,
-                background: "linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)",
-                border: "1px solid #ef5350",
-                borderRadius: "12px",
-                marginTop: "20px",
-              }}
-            >
-              <AlertCircle color="#c62828" size={32} />
-              <Typography
-                variant="h6"
-                sx={{ color: "#c62828", fontWeight: 600 }}
-              >
-                {isError}
-              </Typography>
-            </Box>
-          )}
-
-          {isLoading && <IsError />}
+          {isError && <IsError isError={isError} />}
+          {isLoading && <IsLoadingData />}
 
           {!isLoading && displayAllVideos.length === 0 && (
             <IsLoading

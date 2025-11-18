@@ -1,28 +1,26 @@
-import { Box, Skeleton } from "@mui/material"
+import { Box, AlertCircle, Typography } from "@mui/material"
 
-function IsError() {
+function IsError({ isError }) {
   return (
-    <Box sx={{ marginTop: "40px" }}>
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "1fr 1fr",
-                    md: "repeat(3, 1fr)",
-                  },
-                  gap: 2,
-                }}
+    <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+                padding: 3,
+                background: "linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)",
+                border: "1px solid #ef5350",
+                borderRadius: "12px",
+                marginTop: "20px",
+              }}
+            >
+              <AlertCircle color="#c62828" size={32} />
+              <Typography
+                variant="h6"
+                sx={{ color: "#c62828", fontWeight: 600 }}
               >
-                {[1, 2, 3, 4, 5, 6].map((item) => (
-                  <Skeleton
-                    key={item}
-                    variant="rectangular"
-                    height={160}
-                    sx={{ borderRadius: "12px" }}
-                  />
-                ))}
-              </Box>
+                {isError}
+              </Typography>
             </Box>
   )
 }
