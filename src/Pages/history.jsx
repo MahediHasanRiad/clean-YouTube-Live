@@ -17,7 +17,7 @@ function History() {
 
   const playlists = useSelector((state) => state.Playlist.playlists);
   const allHistory = useSelector((state) => state.History.history);
-  const { playlistId, videoId, index } = allHistory;
+  const { playlistId, videoId } = allHistory;
 
   // allHistory is an object with playlistId and videoId arrays
   const getVideoPlaylist = playlists.filter((item) =>
@@ -84,7 +84,7 @@ function History() {
               />
             ))}
         </Grid>
-        {/* right section (was 'left section' in comment) */}
+        {/* right section */}
         <Box
           component="form"
           sx={{
@@ -100,9 +100,9 @@ function History() {
             <Search />
             <TextField
               id="standard-textarea"
-              placeholder="Search history" // Changed placeholder
+              placeholder="Search history"
               variant="standard"
-              sx={{ flex: 1, marginLeft: 1 }} // Simpler styling
+              sx={{ flex: 1, marginLeft: 1 }}
             />
           </Box>
           <br />

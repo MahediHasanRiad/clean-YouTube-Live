@@ -23,8 +23,6 @@ const PlaylistSlice = createSlice({
     removePlaylist: (state, action) => {
       const playlist = state.playlists.filter(item => item.playlistId !== action.payload);
       state.playlists = playlist
-      console.log(playlist)
-      
     },
   },
   extraReducers: (builder) => {
